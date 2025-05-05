@@ -1,0 +1,26 @@
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
+  },
+});
+
+export async function sendOrderEmail({
+  to,
+  subject,
+  html,
+}: {
+  to: string;
+  subject: string;
+  html: string;
+}) {
+  await transporter.sendMail({
+    from: `"Auto India Spare Parts" <${process.env.GMAIL_USER}>`,
+    to,
+    subject,
+    html,
+  });
+}
