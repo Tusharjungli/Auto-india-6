@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendOrderEmail({
+export async function sendMail({
   to,
   subject,
   html,

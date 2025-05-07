@@ -4,7 +4,6 @@ import Link from "next/link";
 import type { Product } from "@prisma/client";
 import Image from "next/image";
 
-
 export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
@@ -26,7 +25,10 @@ export default function ProductCard({ product }: { product: Product }) {
         {product.stock < 1 ? (
           <p className="text-sm text-red-600 dark:text-red-400 font-semibold mt-2">Out of Stock</p>
         ) : (
-          <p className="text-sm text-green-600 dark:text-green-400 mt-2">In Stock</p>
+          <>
+            <p className="text-sm text-green-600 dark:text-green-400 mt-2">In Stock</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">🚚 Delivery in 2–4 days across India</p>
+          </>
         )}
 
         <button className="mt-4 w-full py-2 rounded-lg bg-black text-white dark:bg-white dark:text-black hover:opacity-90 transition">

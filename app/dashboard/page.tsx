@@ -1,6 +1,7 @@
 import { requireAuth } from "@/lib/authServer";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 export default async function DashboardPage() {
   const session = await requireAuth();
@@ -17,6 +18,7 @@ export default async function DashboardPage() {
   });
 
   const orders = user?.orders || [];
+  const avatarList = [1, 2, 3, 4, 5, 6];
 
   async function updateProfile(formData: FormData) {
     "use server";
@@ -86,6 +88,39 @@ export default async function DashboardPage() {
             Save Changes
           </button>
         </form>
+      </section>
+
+      {/* ✅ Avatar Picker */}
+      <section className="mb-10">
+        <h2 className="text-xl font-semibold mb-3">Choose Your Avatar</h2>
+        <div className="flex gap-4 flex-wrap">
+          {avatarList.map((num) => {
+            const src = `/avatars/${num}.png`;
+            const isSelected = user?.image === src;
+            return (
+              <form
+                key={num}
+                action={async () => {
+                  "use server";
+                  await prisma.user.update({
+                    where: { email: session.user.email! },
+                    data: { image: src },
+                  });
+                }}
+              >
+                <button type="submit" className={`rounded-full overflow-hidden border-4 ${isSelected ? "border-blue-500" : "border-transparent"} transition`}>
+                  <Image
+                    src={src}
+                    alt={`Avatar ${num}`}
+                    width={64}
+                    height={64}
+                    className="rounded-full"
+                  />
+                </button>
+              </form>
+            );
+          })}
+        </div>
       </section>
 
       {/* ✅ Recent Orders */}

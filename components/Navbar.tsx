@@ -8,6 +8,8 @@ import { useCartStore } from "@/lib/store/cartStore";
 import { signOut, useSession } from "next-auth/react";
 import useSyncCart from "@/lib/hooks/useSyncCart";
 import Image from "next/image";
+import NotificationBell from "./NotificationBell";
+
 
 export default function Navbar() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -56,6 +58,9 @@ export default function Navbar() {
               </span>
             )}
           </Link>
+
+          <NotificationBell />
+
 
           {/* Avatar dropdown */}
           <div className="relative">

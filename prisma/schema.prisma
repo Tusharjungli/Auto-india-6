@@ -32,6 +32,8 @@ model User {
   address        String?
   phone          String?
   wishlist       WishlistItem[]
+  notifications Notification[]
+
   accounts       Account[]
   sessions       Session[]
   cartItems      CartItem[]
@@ -140,6 +142,16 @@ model Review {
   product   Product  @relation(fields: [productId], references: [id])
   productId String
 }
+
+model Notification {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
 
 
 
