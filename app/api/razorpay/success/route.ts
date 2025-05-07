@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { sendOrderEmail } from "@/lib/mail"; // ✅ NEW
+import { sendMail } from "@/lib/mail"; // ✅ Email utility
 
 export async function POST() {
   const session = await getServerSession(authOptions);
@@ -33,7 +33,6 @@ export async function POST() {
   );
 
   const validItems = items.filter((item): item is NonNullable<typeof item> => item !== null);
-
   const total = validItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   // ✅ Reduce stock
@@ -59,13 +58,23 @@ export async function POST() {
     },
   });
 
+  // ✅ 🆕 Update user's totalSpent
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      totalSpent: {
+        increment: total,
+      },
+    },
+  });
+
   // ✅ Clear cart
   await prisma.cartItem.deleteMany({
     where: { userId: user.id },
   });
 
   // ✅ Send confirmation email
-  await sendOrderEmail({
+  await sendMail({
     to: session.user.email!,
     subject: "Your Order Confirmation – Auto India Spare Parts",
     html: `

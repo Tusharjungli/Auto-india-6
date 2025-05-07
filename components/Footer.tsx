@@ -26,6 +26,8 @@ export default function Footer() {
             <li><Link href="/products" className="hover:text-black dark:hover:text-white hover:underline transition">Products</Link></li>
             <li><Link href="/about" className="hover:text-black dark:hover:text-white hover:underline transition">About</Link></li>
             <li><Link href="/contact" className="hover:text-black dark:hover:text-white hover:underline transition">Contact</Link></li>
+            <li><Link href="/blog" className="hover:text-white">Blog</Link></li>
+
           </ul>
         </div>
 
@@ -62,6 +64,7 @@ export default function Footer() {
           <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
             <Twitter className="hover:scale-110 transition-transform hover:text-black dark:hover:text-white" />
           </a>
+          
         </div>
       </div>
     </footer>

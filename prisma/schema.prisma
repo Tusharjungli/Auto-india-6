@@ -33,6 +33,7 @@ model User {
   phone          String?
   wishlist       WishlistItem[]
   notifications Notification[]
+  totalSpent Float @default(0)
 
   accounts       Account[]
   sessions       Session[]
@@ -151,6 +152,18 @@ model Notification {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model Blog {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String   // Markdown or HTML
+  excerpt   String?
+  imageUrl  String?
+  tags      String[]
+  createdAt DateTime @default(now())
+}
+
 
 
 
