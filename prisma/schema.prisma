@@ -29,11 +29,17 @@ model User {
   emailVerified  DateTime?
   image          String?
   password       String?   // For credentials login only
-  address        String?
+  addressLine String?
+  city        String?
+  state       String?
+  pincode     String?
+
   phone          String?
   wishlist       WishlistItem[]
   notifications Notification[]
   totalSpent Float @default(0)
+  cars Car[]
+
 
   accounts       Account[]
   sessions       Session[]
@@ -163,6 +169,18 @@ model Blog {
   tags      String[]
   createdAt DateTime @default(now())
 }
+
+model Car {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  model     String
+  year      Int
+  imageUrl  String?
+  createdAt DateTime @default(now())
+}
+
 
 
 

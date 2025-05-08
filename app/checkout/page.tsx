@@ -42,14 +42,8 @@ export default async function CheckoutPage() {
 
   const total = validItems.reduce((sum, item) => sum + item.subtotal, 0);
 
-  if (validItems.length === 0) {
-    return (
-      <main className="min-h-screen p-6 bg-white dark:bg-black text-black dark:text-white">
-        <h1 className="text-3xl font-bold mb-6">Checkout</h1>
-        <p>Your cart is empty.</p>
-      </main>
-    );
-  }
+  const hasAddress =
+    user.addressLine && user.city && user.state && user.pincode;
 
   return (
     <main className="min-h-screen p-6 bg-white dark:bg-black text-black dark:text-white">
@@ -58,9 +52,13 @@ export default async function CheckoutPage() {
       {/* ✅ Delivery Address */}
       <section className="mb-8">
         <h2 className="text-lg font-semibold mb-2">Delivery Address</h2>
-        {user.address ? (
-          <p className="bg-gray-100 dark:bg-gray-800 p-4 rounded whitespace-pre-line">
-            {user.address}
+        {hasAddress ? (
+          <p className="bg-gray-100 dark:bg-gray-800 p-4 rounded whitespace-pre-line leading-relaxed">
+            {user.addressLine}
+            <br />
+            {user.city}, {user.state}
+            <br />
+            {user.pincode}
           </p>
         ) : (
           <p className="text-sm text-red-500">
@@ -94,7 +92,13 @@ export default async function CheckoutPage() {
       {/* 💳 Total + Payment */}
       <div className="mt-8 text-right">
         <p className="text-xl font-bold">Total: ₹{total}</p>
-        <CheckoutButton total={total} />
+        {hasAddress ? (
+          <CheckoutButton total={total} />
+        ) : (
+          <p className="text-red-500 mt-2 text-sm">
+            Please add a valid delivery address to continue.
+          </p>
+        )}
       </div>
     </main>
   );

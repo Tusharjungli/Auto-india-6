@@ -17,7 +17,6 @@ export default function CartPage() {
         removeFromCart(id);
       } else {
         removeFromCart(id); // remove once
-        // add back with qty -1
         for (let i = 0; i < item.quantity - 1; i++) {
           addToCart(item);
         }
@@ -29,11 +28,14 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <main className="min-h-screen p-6 bg-white dark:bg-black text-black dark:text-white">
-        <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
-        <p>Your cart is empty.</p>
-        <Link href="/products" className="mt-4 inline-block text-blue-600 dark:text-blue-400 underline">
-          Go to Products
+      <main className="min-h-screen p-6 bg-white dark:bg-black text-black dark:text-white flex flex-col items-center justify-center">
+        <h1 className="text-3xl font-bold mb-4">Your Cart</h1>
+        <p className="text-gray-500 dark:text-gray-400 mb-6">Your cart is currently empty.</p>
+        <Link
+          href="/products"
+          className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
+        >
+          Browse Products
         </Link>
       </main>
     );
@@ -41,25 +43,31 @@ export default function CartPage() {
 
   return (
     <main className="min-h-screen p-6 bg-white dark:bg-black text-black dark:text-white">
-      <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
+      <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
 
       <div className="space-y-6">
         {items.map((item) => (
-          <div key={item.id} className="flex justify-between items-center border-b pb-4">
-            <div>
-              <p className="font-semibold">{item.name}</p>
-              <p className="text-sm text-gray-500">₹{item.price} × {item.quantity}</p>
-              <div className="mt-2 flex space-x-2">
+          <div
+            key={item.id}
+            className="border-b pb-4 flex justify-between items-start gap-4 dark:border-gray-700"
+          >
+            <div className="flex-1">
+              <p className="font-semibold text-lg">{item.name}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                ₹{item.price} × {item.quantity}
+              </p>
+
+              <div className="mt-3 flex items-center gap-2">
                 <button
                   onClick={() => updateQuantity(item.id, "dec")}
-                  className="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded"
+                  className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded hover:opacity-80"
                 >
                   -
                 </button>
-                <span>{item.quantity}</span>
+                <span className="px-2">{item.quantity}</span>
                 <button
                   onClick={() => updateQuantity(item.id, "inc")}
-                  className="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded"
+                  className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded hover:opacity-80"
                 >
                   +
                 </button>
@@ -71,15 +79,26 @@ export default function CartPage() {
                 </button>
               </div>
             </div>
-            <p className="font-semibold">₹{item.price * item.quantity}</p>
+
+            <div className="text-right">
+              <p className="font-medium">Subtotal:</p>
+              <p className="text-lg font-bold">₹{item.price * item.quantity}</p>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-10 text-right">
-        <p className="text-xl font-bold">Total: ₹{total}</p>
+      <div className="mt-12 border-t pt-6 text-right">
+        <p className="text-xl font-bold mb-2">Total: ₹{total}</p>
 
-        <div className="mt-4 flex flex-col sm:flex-row justify-end gap-4">
+        <div className="mt-4 flex flex-col sm:flex-row justify-end items-center gap-4">
+          <Link
+            href="/products"
+            className="text-blue-600 dark:text-blue-400 underline text-sm"
+          >
+            ← Continue Shopping
+          </Link>
+
           <button
             onClick={clearCart}
             className="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition"
@@ -89,7 +108,7 @@ export default function CartPage() {
 
           <Link
             href="/checkout"
-            className="px-6 py-2 bg-black text-white dark:bg-white dark:text-black rounded-full hover:opacity-90 transition text-center"
+            className="px-6 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition"
           >
             Proceed to Checkout
           </Link>
