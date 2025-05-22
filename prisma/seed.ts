@@ -9,6 +9,7 @@ async function main() {
     data: [
       {
         name: "Kia Brake Pads",
+        slug: "kia-brake-pads",
         description: "High-quality brake pads for Kia vehicles.",
         price: 2499,
         imageUrl: "/images/kia-brake-pads.jpg",
@@ -17,6 +18,7 @@ async function main() {
       },
       {
         name: "Hyundai Oil Filter",
+        slug: "hyundai-oil-filter",
         description: "Durable oil filter for Hyundai engines.",
         price: 799,
         imageUrl: "/images/hyundai-oil-filter.jpg",
@@ -25,6 +27,7 @@ async function main() {
       },
       {
         name: "Tata Air Filter",
+        slug: "tata-air-filter",
         description: "Air filter compatible with Tata models.",
         price: 999,
         imageUrl: "/images/tata-air-filter.jpg",
