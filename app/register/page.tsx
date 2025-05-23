@@ -1,17 +1,15 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -19,8 +17,18 @@ export default function RegisterPage() {
     try {
       await axios.post("/api/register", { email, password });
       await signIn("credentials", { email, password, callbackUrl: "/" });
-    } catch (err: any) {
-      setError(err.response?.data?.error || "Something went wrong.");
+    } catch (err: unknown) {
+      // Safely check for axios error shape
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err &&
+        typeof (err as any).response?.data?.error === "string"
+      ) {
+        setError((err as any).response.data.error);
+      } else {
+        setError("Something went wrong.");
+      }
     } finally {
       setLoading(false);
     }
