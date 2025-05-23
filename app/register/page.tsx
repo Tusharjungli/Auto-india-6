@@ -18,7 +18,6 @@ export default function RegisterPage() {
       await axios.post("/api/register", { email, password });
       await signIn("credentials", { email, password, callbackUrl: "/" });
     } catch (err: unknown) {
-      // Safely check for axios error shape
       if (
         typeof err === "object" &&
         err !== null &&
