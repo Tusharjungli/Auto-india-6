@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "prisma db seed"
-    
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -26,6 +25,7 @@
     "next-auth": "^4.24.11",
     "nodemailer": "^6.10.1",
     "pg": "^8.15.6",
+    "postgres": "^3.4.7",
     "razorpay": "^2.9.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
